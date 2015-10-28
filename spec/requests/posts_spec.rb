@@ -20,7 +20,7 @@ RSpec.describe "posts" do
       }
       post posts_path, payload
       expect(response).to have_http_status(:created)
-      expect(json["title"]).to eq "My Title"
+      expect(json["data"]["attributes"]["title"]).to eq "My Title"
     end
 
     it "rejects when missing title" do
