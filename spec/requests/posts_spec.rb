@@ -9,4 +9,30 @@ RSpec.describe "posts" do
       expect(json.count).to eq 1
     end
   end
+
+  describe "#create" do
+    it "creates and returns a post" do
+      payload = {
+        post: {
+          title: "My Title",
+          body: "content"
+        }
+      }
+      post posts_path, payload
+      expect(response).to have_http_status(:created)
+      expect(json["title"]).to eq "My Title"
+    end
+
+    it "rejects when missing title" do
+      payload = {
+        post: {
+          title: "",
+          body: "content"
+        }
+      }
+      post posts_path, payload
+      expect(response).to have_http_status(:bad_request)
+      expect(json).to_not be_empty
+    end
+  end
 end
